@@ -2,7 +2,7 @@ import React from 'react';
 
 export const HeroSection: React.FC = () => {
   return (
-    <div className="relative w-full min-h-[550px] md:min-h-[600px] h-[85vh] md:h-[80vh] flex flex-col justify-end pb-16 md:pb-0 md:justify-center items-center overflow-hidden bg-[#1A1A1A]">
+    <div className="relative w-full min-h-[600px] md:min-h-[600px] h-[90vh] md:h-[80vh] flex flex-col justify-end pb-4 md:pb-0 md:justify-center items-center overflow-hidden bg-[#1A1A1A]">
       {/* Background Image */}
       <div
         className="absolute inset-0 w-full h-full bg-[length:100%_auto] md:bg-cover bg-top md:bg-center bg-no-repeat"
@@ -12,7 +12,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl px-4 mt-0 md:mt-20">
+      <div className="relative z-10 text-center max-w-4xl px-4 mt-32 md:mt-20">
         <span className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-widest text-[#D4AF37] uppercase border border-[#D4AF37]/50 rounded-full bg-[#1A1A1A]/50 backdrop-blur-sm">
           October 5th – 10th, 2026
         </span>
