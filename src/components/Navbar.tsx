@@ -16,9 +16,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenChat }) => {
           <div className="flex justify-between items-center h-20">
 
             {/* Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full border border-[#D4AF37] flex items-center justify-center font-cinzel text-sm font-bold text-[#D4AF37]">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-10 h-10 min-w-[40px] rounded-full border border-[#D4AF37] flex items-center justify-center font-cinzel text-sm font-bold text-[#D4AF37]">
                 KPC
+              </div>
+              <div className="sm:hidden flex flex-col">
+                <span className="font-serif-heading text-[15px] leading-tight font-bold text-[#FAF7F2] tracking-wide">
+                  Kolkata Puja Concierge
+                </span>
               </div>
               <div className="hidden sm:block">
                 <div className="flex items-center gap-2">
