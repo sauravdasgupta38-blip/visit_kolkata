@@ -7,7 +7,7 @@
 
 # Kolkata Puja Concierge 2026 🔱
 
-An exclusive, highly curated VIP experience dashboard tailored for distinguished guests (specifically, the "Royal London" delegation) visiting Kolkata during the grand Durga Puja festival in October 2026. This platform acts as a digital concierge, providing handpicked itineraries, real-time schedule management, and cultural insights.
+An exclusive, highly curated VIP experience dashboard tailored for distinguished guests visiting Kolkata during the grand Durga Puja festival in October 2026. This platform acts as a digital concierge, providing handpicked itineraries, real-time schedule management, and cultural insights.
 
 ## ✨ Features
 
