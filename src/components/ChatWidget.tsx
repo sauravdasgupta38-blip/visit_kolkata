@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ChatMessage } from '../types';
 import { Sparkles, MessageSquare, X, Send, Bot, User, Languages, RefreshCw, ChevronRight } from 'lucide-react';
 
@@ -21,10 +23,10 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onSched
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [prompts, setPrompts] = useState<string[]>([
-    "Tell me about Kumartuli in early October (Oct 1–5)",
-    "How do I arrange a private Hooghly River sunset cruise?",
-    "Recommend authentic Bengali fine dining for Our London Guests",
-    "Explain pre-festival window vs peak Durga Puja dates"
+    "I want to change the schedule",
+    "Can you show me the schedule for 10th Oct 2026",
+    "Tell me something about the Durga Puja",
+    "Show me the best spots for evening nightlife in Park Street"
   ]);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -164,7 +166,20 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onSched
                   : 'bg-[#FAF7F2] text-[#1A1A1A] rounded-tl-none border border-gray-200'
                   }`}
               >
-                <p className="whitespace-pre-line">{m.text}</p>
+                <div className="markdown-chat-content">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      strong: ({ node, ...props }) => <strong className={isUser ? "font-semibold" : "font-bold text-[#8A1515]"} {...props} />,
+                      ul: ({ node, ...props }) => <ul className="list-disc pl-4 my-2 space-y-1 marker:text-[#D4AF37]" {...props} />,
+                      ol: ({ node, ...props }) => <ol className="list-decimal pl-4 my-2 space-y-1 marker:text-[#D4AF37]" {...props} />,
+                      li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+                      p: ({ node, ...props }) => <p className="mb-2 last:mb-0 whitespace-pre-wrap leading-relaxed" {...props} />,
+                    }}
+                  >
+                    {m.text}
+                  </ReactMarkdown>
+                </div>
                 <span className={`text-[9px] block text-right mt-1.5 ${isUser ? 'text-white/60' : 'text-gray-400'}`}>
                   {m.timestamp}
                 </span>

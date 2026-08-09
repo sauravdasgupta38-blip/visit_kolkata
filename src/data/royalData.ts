@@ -29,20 +29,54 @@ export const SHOPPING_GUIDE = [
     showScheduleForm: true
   },
   {
-    id: 2,
-    title: 'Sabyasachi Flagship Store',
-    subtitle: 'Haute Couture',
-    description: 'Explore the master couturier\'s opulent flagship store. Discover breathtaking bridal wear, jewelry, and accessories in a museum-like setting.',
-    image: 'https://image.pollinations.ai/prompt/Opulent_Indian_bridal_haute_couture_store_interior_vintage_museum_antique_chandeliers_wine_velvet_decor?width=1280&height=720&nologo=true',
-    location: 'Lake Road'
+    id: 4,
+    title: 'Mrignayani M.P. Govt. Emporium',
+    subtitle: 'Handloom Saree at Dakshinapan',
+    description: 'Explore an exclusive collection of traditional handloom sarees and fabrics from Madhya Pradesh in the bustling Dakshinapan Shopping Complex.',
+    image: '/mrignayani_saree.png',
+    location: 'Dakshinapan',
+    mapLink: 'https://maps.app.goo.gl/Cad64w2c1Yb6PUWr9',
+    showScheduleForm: true
   },
   {
-    id: 3,
-    title: 'Weavers Studio',
-    subtitle: 'Handwoven Masterpieces',
-    description: 'Specializing in fine Bengal handlooms, Jamdani, and Kantha embroidery. Perfect for collecting authentic, high-quality indigenous textiles.',
-    image: 'https://image.pollinations.ai/prompt/Elegant_display_fine_handwoven_Jamdani_Bengal_handloom_textiles_warm_inviting_lighting_ivory_gold?width=1280&height=720&nologo=true',
-    location: 'Ballygunge'
+    id: 5,
+    title: 'Lepakshi Handicrafts Emporium',
+    subtitle: 'Authentic Indian Handicrafts',
+    description: 'Discover beautiful, authentic Indian handicrafts and traditional artifacts. A perfect destination for cultural souvenirs and artistic decor.',
+    image: '/lepakshi_saree.png',
+    location: 'Dakshinapan',
+    mapLink: 'https://maps.app.goo.gl/3JHbp2zPs13a5NRb6',
+    showScheduleForm: true
+  },
+  {
+    id: 6,
+    title: 'Sriniketan Fashions Pvt. Ltd.',
+    subtitle: 'Family Ethnic Destination',
+    description: 'A premier shopping destination for ethnic wear and traditional sarees, offering a vast and exquisite collection for festive occasions.',
+    image: '/sriniketan.jpg',
+    location: 'Gariahat',
+    mapLink: 'https://maps.app.goo.gl/28WjV5Q7JPxVzbE18',
+    showScheduleForm: true
+  },
+  {
+    id: 7,
+    title: 'The Bengal Store : Handicraft & Craft Store',
+    subtitle: 'Terracotta & Bengal Artisans Shop',
+    description: 'Discover authentic terracotta and handcrafted treasures from Bengal artisans in this wonderful craft store near Jadavpur.',
+    image: '/crafts.jpg',
+    location: 'Jodhpur Park',
+    mapLink: 'https://maps.app.goo.gl/AhDvnAuNSYub5E34A',
+    showScheduleForm: true
+  },
+  {
+    id: 8,
+    title: 'Byloom',
+    subtitle: 'Handloom Sarees & Handicrafts',
+    description: 'A celebrated boutique blending Bengal\'s weaving legacy with modern patterns. Famous for its signature Abir sarees, traditional handlooms, and the cozy Byloom Canteen.',
+    image: '/byloom.jpg',
+    location: 'Hindusthan Park',
+    mapLink: 'https://maps.app.goo.gl/VtWpLhXraSjtd9J39',
+    showScheduleForm: true
   }
 ];
 
