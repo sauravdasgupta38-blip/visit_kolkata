@@ -85,19 +85,33 @@ export const HERITAGE_PLACES = [
     id: 1,
     title: 'Victoria Memorial',
     description: 'An iconic marble monument dedicated to Queen Victoria, surrounded by 64 acres of manicured gardens. A symbol of Kolkata\'s colonial history.',
-    image: 'https://image.pollinations.ai/prompt/Majestic_Victoria_Memorial_Kolkata_sunset_white_marble_glowing_warm_light_cinematic_architectural?width=1280&height=720&nologo=true'
+    image: '/victoria_memorial.png',
+    mapLink: 'https://maps.app.goo.gl/CM9HL1AMnJxwbgU66',
+    showScheduleForm: true
   },
   {
     id: 2,
-    title: 'Howrah Bridge',
-    description: 'The architectural marvel spanning the Hooghly River. Best experienced at dawn or fully illuminated at night.',
-    image: 'https://image.pollinations.ai/prompt/Breathtaking_wide_shot_Howrah_Bridge_Kolkata_golden_hour_premium_photography_high_contrast?width=1280&height=720&nologo=true'
+    title: 'Bandel Church',
+    description: 'Founded in 1599 by Portuguese Augustinian monks, the Basilica of the Holy Rosary stands as a magnificent relic of Portuguese settlement, featuring stunning Indo-Portuguese architecture.',
+    image: '/bandel_church.jpg',
+    mapLink: 'https://maps.app.goo.gl/ZMZRexoB4qZqLYTN8',
+    showScheduleForm: true
   },
   {
     id: 3,
     title: 'Marble Palace',
     description: 'A 19th-century neoclassical mansion featuring an eclectic collection of Western sculptures, Victorian furniture, and European paintings.',
-    image: 'https://image.pollinations.ai/prompt/Luxurious_19th_century_neoclassical_mansion_interior_Kolkata_vintage_furniture_grand_courtyard_cinematic?width=1280&height=720&nologo=true'
+    image: '/marble-palace-mansion.png',
+    mapLink: 'https://maps.app.goo.gl/h375pbLPm6nTzRWr6',
+    showScheduleForm: true
+  },
+  {
+    id: 4,
+    title: 'The Denmark Tavern',
+    description: 'A beautifully restored 1786 riverside tavern in Serampore, showcasing the legacy of the Danish East India Company. It offers a perfect one-day heritage getaway from Kolkata.',
+    image: '/denmark_tavern.jpg',
+    mapLink: 'https://maps.app.goo.gl/vufD8eRFSNarDwjS6',
+    showScheduleForm: true
   }
 ];
 
@@ -105,19 +119,41 @@ export const NIGHTLIFE_PLACES = [
   {
     id: 1,
     title: 'Trincas Restaurant & Bar',
-    description: 'The legendary Park Street institution that introduced jazz to Kolkata in the 1960s. Enjoy live music and heritage ambiance.',
-    image: 'https://image.pollinations.ai/prompt/Vintage_1960s_style_premium_jazz_bar_Kolkata_live_band_stage_crimson_leather_booths_dim_warm_lighting?width=1280&height=720&nologo=true'
-  },
-  {
-    id: 2,
-    title: 'The Bengal Club',
-    description: 'An exclusive, aristocratic private club offering refined dining, mahogany-paneled bars, and an atmosphere of colonial elegance.',
-    image: 'https://image.pollinations.ai/prompt/Aristocratic_colonial_dining_hall_mahogany_paneling_historical_oil_portraits_elegant_tables_warm_ambient_lighting?width=1280&height=720&nologo=true'
+    description: 'An iconic Park Street institution since 1927. Originally a Swiss tea room, it became the heart of Kolkata\'s 1960s nightlife and remains a legendary venue for continental classics and live music.',
+    image: '/trincas.jpg',
+    mapLink: 'https://maps.app.goo.gl/ZC7Vi9XLTduk2Us47',
+    showScheduleForm: true
   },
   {
     id: 3,
     title: 'Someplace Else',
-    description: 'The iconic pub at The Park Hotel, famous for hosting live bands every night. A cornerstone of Kolkata\'s contemporary music scene.',
-    image: 'https://image.pollinations.ai/prompt/Vibrant_premium_pub_live_music_band_performing_warm_wooden_interiors_cinematic_nightlife?width=1280&height=720&nologo=true'
+    description: 'An iconic, wood-panelled British-style live music pub established in 1994 inside The Park Hotel. It has hosted legendary bands and remains the cornerstone of Kolkata\'s vibrant nightlife and contemporary music scene.',
+    image: '/Someplace_Else.webp',
+    mapLink: 'https://maps.app.goo.gl/4AD663LjhYZgzMru6',
+    showScheduleForm: true
+  },
+  {
+    id: 4,
+    title: 'Dhamsa Tribal Kitchen',
+    description: 'A unique, themed restaurant in Eco Park serving authentic tribal and rural Bengali cuisine. The architecture is beautifully inspired by the traditional Dhamsa drum, offering a rustic dining experience.',
+    image: '/Dhamsa.jpg',
+    mapLink: 'https://maps.app.goo.gl/wN3ixYHsd4agw5zF8',
+    showScheduleForm: true
+  },
+  {
+    id: 5,
+    title: 'Ozora',
+    description: 'A sophisticated rooftop restaurant and skybar on the 20th floor of Acropolis Mall. Offering stunning panoramic views of the Kolkata skyline, chic seating, an infinity pool, and a diverse multi-cuisine menu.',
+    image: '/Ozora.webp',
+    mapLink: 'https://maps.app.goo.gl/xuRjnNgeBsM6FYxe6',
+    showScheduleForm: true
+  },
+  {
+    id: 6,
+    title: 'Destination 16',
+    description: 'A vibrant pub and lounge on Park Street, playfully named after the local 700016 pincode. Known for its energetic ambiance, DJ sets, creative cocktails, and a diverse menu featuring global tapas and fusion specialties.',
+    image: '/destination16.avif',
+    mapLink: 'https://maps.app.goo.gl/boxD2wG3igTw7nj48',
+    showScheduleForm: true
   }
 ];

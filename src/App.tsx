@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#1A1A1A] flex flex-col font-sans">
-      
+
       {/* 1. Sticky Navigation Bar */}
       <Navbar
         onOpenChat={() => setChatOpen(true)}
@@ -24,7 +24,7 @@ export default function App() {
       />
 
       <main className="flex-1">
-        
+
         {/* Hero Section */}
         <HeroSection />
 
@@ -38,26 +38,26 @@ export default function App() {
         <DurgaPujaSection />
 
         {/* Shopping Guide */}
-        <PremiumCardsSection 
+        <PremiumCardsSection
           id="shopping"
-          title="Premium Shopping Guide" 
+          title="Premium Shopping Guide"
           subtitle="Curated Ateliers & Boutiques"
           data={SHOPPING_GUIDE}
           darkBackground={false}
         />
 
         {/* Heritage Kolkata */}
-        <PremiumCardsSection 
+        <PremiumCardsSection
           id="heritage"
-          title="Historic Landmarks" 
+          title="Historic Landmarks"
           subtitle="Colonial Grandeur"
           data={HERITAGE_PLACES}
           darkBackground={true}
         />
 
         {/* Nightlife & Fine Dining */}
-        <PremiumCardsSection 
-          title="Nightlife & Fine Dining" 
+        <PremiumCardsSection
+          title="Nightlife & Fine Dining"
           subtitle="Gastronomy & Jazz"
           data={NIGHTLIFE_PLACES}
           darkBackground={false}
@@ -75,9 +75,9 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-[#4A0E17] text-[#FAF7F2] border-t-2 border-[#D4AF37] pt-12 pb-8 mt-16 no-print">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-[#D4AF37]/30">
-            
+
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full border border-[#D4AF37] flex items-center justify-center font-cinzel text-xs font-bold text-[#D4AF37]">
@@ -87,7 +87,7 @@ export default function App() {
                 <span className="bg-[#D4AF37] text-[#4A0E17] text-[10px] font-bold px-1.5 py-0.5 rounded">2026</span>
               </div>
               <p className="text-xs text-[#FAF7F2]/80 leading-relaxed">
-                The definitive luxury guide for Our London Guests visiting Kolkata in October 2026.
+                From city of Joy to Thames shore, Kolkata welcomes hearts galore.
               </p>
             </div>
 
@@ -106,8 +106,8 @@ export default function App() {
                 24/7 Diplomatic Liaison
               </span>
               <p className="text-[#FAF7F2]/80 leading-relaxed">
-                Emergency Medical Desk: +91 33 2320 3040 (VIP Desk)<br />
-                Kolkata Tourist Police Helpline: 112 / +91 33 2214 5000
+                Emergency Medical Desk: +91 08062972764 (Apollo)<br />
+                Kolkata Tourist Police Helpline: (91-33) 22505000
               </p>
             </div>
 

@@ -19,7 +19,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl px-4 mt-8 md:mt-20">
+      <div className="relative z-10 text-center max-w-4xl px-4 mt-8 mb-20 md:mt-20 md:mb-24">
         <span className="hidden md:inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-widest text-[#D4AF37] uppercase border border-[#D4AF37]/50 rounded-full bg-[#1A1A1A]/50 backdrop-blur-sm">
           October 5th – 10th, 2026
         </span>
