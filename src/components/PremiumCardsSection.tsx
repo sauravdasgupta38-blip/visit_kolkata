@@ -19,9 +19,10 @@ interface PremiumCardsSectionProps {
   subtitle: string;
   data: CardData[];
   darkBackground?: boolean;
+  user?: 'A' | 'B';
 }
 
-export const PremiumCardsSection: React.FC<PremiumCardsSectionProps> = ({ id, title, subtitle, data, darkBackground = true }) => {
+export const PremiumCardsSection: React.FC<PremiumCardsSectionProps> = ({ id, title, subtitle, data, darkBackground = true, user }) => {
   const bgClass = darkBackground ? 'bg-[#1A1A1A]' : 'bg-[#FAF7F2]';
   const textColorClass = darkBackground ? 'text-[#FAF7F2]' : 'text-[#4A0E17]';
   const descColorClass = darkBackground ? 'text-[#FAF7F2]/80' : 'text-gray-600';
@@ -46,7 +47,8 @@ export const PremiumCardsSection: React.FC<PremiumCardsSectionProps> = ({ id, ti
           day_id: parseInt(scheduleDate),
           time: `${scheduleHour}:${scheduleMinute} ${scheduleAmPm}`,
           event: 'Visit ' + item.title,
-          location: item.location || 'Kolkata'
+          location: item.location || 'Kolkata',
+          user: user || 'A'
         })
       });
       if (res.ok) {

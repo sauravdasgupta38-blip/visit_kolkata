@@ -10,7 +10,9 @@ import { ChatWidget } from './components/ChatWidget';
 import { SHOPPING_GUIDE, HERITAGE_PLACES, NIGHTLIFE_PLACES } from './data/royalData';
 
 export default function App() {
-  const [user, setUser] = useState<'A' | 'B' | 'Admin' | null>(null);
+  const [user, setUser] = useState<'A' | 'B' | 'Admin' | null>(() => {
+    return (localStorage.getItem('kpc_user') as 'A' | 'B' | 'Admin' | null) || null;
+  });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,10 +23,15 @@ export default function App() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'UserA' && password === 'UserA@Password') setUser('A');
-    else if (username === 'UserB' && password === 'UserB@Password') setUser('B');
-    else if (username === 'UserAdmin' && password === 'UserAdmin@Password') setUser('Admin');
+    if (username === 'UserA' && password === 'UserA@Password') { setUser('A'); localStorage.setItem('kpc_user', 'A'); }
+    else if (username === 'UserB' && password === 'UserB@Password') { setUser('B'); localStorage.setItem('kpc_user', 'B'); }
+    else if (username === 'UserAdmin' && password === 'UserAdmin@Password') { setUser('Admin'); localStorage.setItem('kpc_user', 'Admin'); }
     else setError('Invalid credentials');
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('kpc_user');
   };
 
   if (!user) {
@@ -58,6 +65,7 @@ export default function App() {
       <Navbar
         onOpenChat={() => setChatOpen(true)}
         activeSection={activeSection}
+        onLogout={handleLogout}
       />
 
       <main className="flex-1">
@@ -88,6 +96,7 @@ export default function App() {
           subtitle="Curated Ateliers & Boutiques"
           data={SHOPPING_GUIDE}
           darkBackground={false}
+          user={chatUser}
         />
 
         {/* Heritage Kolkata */}
@@ -97,6 +106,7 @@ export default function App() {
           subtitle="Colonial Grandeur"
           data={HERITAGE_PLACES}
           darkBackground={true}
+          user={chatUser}
         />
 
         {/* Nightlife & Fine Dining */}
@@ -105,6 +115,7 @@ export default function App() {
           subtitle="Gastronomy & Jazz"
           data={NIGHTLIFE_PLACES}
           darkBackground={false}
+          user={chatUser}
         />
 
       </main>

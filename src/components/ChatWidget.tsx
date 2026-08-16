@@ -199,7 +199,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onSched
         {loading && (
           <div className="flex items-center gap-2 text-xs text-[#4A0E17] bg-[#FAF7F2] p-3 rounded-2xl w-fit border border-gray-200">
             <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#C82323]" />
-            <span>Consulting Kolkata Cultural Archives...</span>
+            <span>Consulting Tilottama...</span>
           </div>
         )}
 

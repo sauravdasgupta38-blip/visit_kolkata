@@ -4,9 +4,10 @@ import { Menu, MessageSquare, Phone, X } from 'lucide-react';
 interface NavbarProps {
   onOpenChat: () => void;
   activeSection: string;
+  onLogout?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenChat }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenChat, onLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -60,6 +61,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenChat }) => {
                   <MessageSquare className="w-4 h-4" />
                   Ask Tilottama
                 </button>
+                {onLogout && (
+                  <button onClick={onLogout} className="text-[#FAF7F2] hover:text-[#D4AF37] transition-colors text-xs font-bold uppercase tracking-wider ml-4">
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
 
@@ -120,6 +126,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenChat }) => {
                   <MessageSquare className="w-4 h-4" />
                   Ask Tilottama
                 </button>
+                {onLogout && (
+                  <button onClick={() => { setIsMobileMenuOpen(false); onLogout(); }} className="mt-2 text-[#FAF7F2] border border-[#FAF7F2]/30 px-4 py-3 rounded hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors text-sm font-bold uppercase tracking-wider w-full">
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           </div>
