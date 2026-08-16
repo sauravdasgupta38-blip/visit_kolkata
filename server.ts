@@ -18,7 +18,8 @@ app.use(express.json());
 // ----------------------------------------------------
 app.get('/api/agenda', (req: Request, res: Response) => {
   try {
-    const agenda = getAgendaData();
+    const user = (req.query.user as 'A' | 'B') || 'A';
+    const agenda = getAgendaData(user);
     return res.json(agenda);
   } catch (err) {
     console.error('Error fetching agenda from database:', err);
@@ -28,11 +29,11 @@ app.get('/api/agenda', (req: Request, res: Response) => {
 
 app.post('/api/schedule/add', (req: Request, res: Response) => {
   try {
-    const { day_id, time, event, location } = req.body;
+    const { day_id, time, event, location, user = 'A' } = req.body;
     if (!day_id || !time || !event || !location) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
-    const newEvent = addScheduleEvent(day_id, time, event, location);
+    const newEvent = addScheduleEvent(day_id, time, event, location, user);
     return res.json({ success: true, event: newEvent });
   } catch (err) {
     console.error('Error adding schedule event:', err);
@@ -262,10 +263,10 @@ const scheduleTools = [
 ];
 
 // Execute a tool call and return the result
-function executeToolCall(name: string, args: Record<string, unknown>): { result: unknown; mutated: boolean } {
+function executeToolCall(name: string, args: Record<string, unknown>, user: 'A' | 'B'): { result: unknown; mutated: boolean } {
   switch (name) {
     case 'get_agenda_overview': {
-      const data = getAgendaData();
+      const data = getAgendaData(user);
       return { result: data, mutated: false };
     }
     case 'add_schedule_event': {
@@ -273,14 +274,15 @@ function executeToolCall(name: string, args: Record<string, unknown>): { result:
         args.day_id as number,
         args.time as string,
         args.event as string,
-        args.location as string
+        args.location as string,
+        user
       );
       console.log(`✅ Chatbot added schedule event: ${JSON.stringify(newEvent)}`);
       return { result: { success: true, addedEvent: newEvent }, mutated: true };
     }
     case 'update_schedule_event': {
       const { schedule_id, ...fields } = args as { schedule_id: number; time?: string; event?: string; location?: string; status?: string };
-      const updated = updateScheduleEvent(schedule_id, fields);
+      const updated = updateScheduleEvent(schedule_id, fields, user);
       if (updated) {
         console.log(`✅ Chatbot updated schedule event #${schedule_id}: ${JSON.stringify(updated)}`);
         return { result: { success: true, updatedEvent: updated }, mutated: true };
@@ -293,7 +295,7 @@ function executeToolCall(name: string, args: Record<string, unknown>): { result:
 }
 
 app.post('/api/chat', async (req: Request, res: Response) => {
-  const { message, language = 'English', history = [] } = req.body || {};
+  const { message, language = 'English', history = [], user = 'A' } = req.body || {};
 
   if (!message || typeof message !== 'string') {
     return res.status(400).json({ error: 'Message field is required' });
@@ -373,7 +375,7 @@ Keep answers elegant, clear, structured with bullet points when listing recommen
           console.log(`🔧 OpenAI requested tool: ${functionName}(${JSON.stringify(args)})`);
 
           // Execute the tool
-          const { result, mutated } = executeToolCall(functionName, args);
+          const { result, mutated } = executeToolCall(functionName, args, user as 'A' | 'B');
           if (mutated) scheduleChanged = true;
 
           // Add our function response to the conversation

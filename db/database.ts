@@ -18,15 +18,30 @@ db.pragma('journal_mode = WAL');
 // Schema creation
 // ----------------------------------------------------
 db.exec(`
-  CREATE TABLE IF NOT EXISTS agenda_days (
+  CREATE TABLE IF NOT EXISTS agenda_days_A (
     id    INTEGER PRIMARY KEY AUTOINCREMENT,
     date  TEXT NOT NULL,
     title TEXT NOT NULL
   );
 
-  CREATE TABLE IF NOT EXISTS agenda_schedules (
+  CREATE TABLE IF NOT EXISTS agenda_schedules_A (
     id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    day_id   INTEGER NOT NULL REFERENCES agenda_days(id),
+    day_id   INTEGER NOT NULL REFERENCES agenda_days_A(id),
+    time     TEXT NOT NULL,
+    event    TEXT NOT NULL,
+    location TEXT NOT NULL,
+    status   TEXT NOT NULL DEFAULT 'Planned'
+  );
+
+  CREATE TABLE IF NOT EXISTS agenda_days_B (
+    id    INTEGER PRIMARY KEY AUTOINCREMENT,
+    date  TEXT NOT NULL,
+    title TEXT NOT NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS agenda_schedules_B (
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    day_id   INTEGER NOT NULL REFERENCES agenda_days_B(id),
     time     TEXT NOT NULL,
     event    TEXT NOT NULL,
     location TEXT NOT NULL,
@@ -37,9 +52,10 @@ db.exec(`
 // ----------------------------------------------------
 // Seed data (only if the tables are empty)
 // ----------------------------------------------------
-const rowCount = (db.prepare('SELECT COUNT(*) AS cnt FROM agenda_days').get() as { cnt: number }).cnt;
+const rowCountA = (db.prepare('SELECT COUNT(*) AS cnt FROM agenda_days_A').get() as { cnt: number }).cnt;
+const rowCountB = (db.prepare('SELECT COUNT(*) AS cnt FROM agenda_days_B').get() as { cnt: number }).cnt;
 
-if (rowCount === 0) {
+if (rowCountA === 0 || rowCountB === 0) {
   const SEED_DATA = [
     {
       date: 'Oct 5',
@@ -91,20 +107,25 @@ if (rowCount === 0) {
     }
   ];
 
-  const insertDay = db.prepare('INSERT INTO agenda_days (date, title) VALUES (?, ?)');
-  const insertSchedule = db.prepare('INSERT INTO agenda_schedules (day_id, time, event, location, status) VALUES (?, ?, ?, ?, ?)');
+  const seedTables = (user: 'A' | 'B') => {
+    const insertDay = db.prepare(`INSERT INTO agenda_days_${user} (date, title) VALUES (?, ?)`);
+    const insertSchedule = db.prepare(`INSERT INTO agenda_schedules_${user} (day_id, time, event, location, status) VALUES (?, ?, ?, ?, ?)`);
 
-  const seedAll = db.transaction(() => {
-    for (const day of SEED_DATA) {
-      const result = insertDay.run(day.date, day.title);
-      const dayId = result.lastInsertRowid;
-      for (const s of day.schedules) {
-        insertSchedule.run(dayId, s.time, s.event, s.location, s.status);
+    const seedAll = db.transaction(() => {
+      for (const day of SEED_DATA) {
+        const result = insertDay.run(day.date, day.title);
+        const dayId = result.lastInsertRowid;
+        for (const s of day.schedules) {
+          insertSchedule.run(dayId, s.time, s.event, s.location, s.status);
+        }
       }
-    }
-  });
+    });
 
-  seedAll();
+    seedAll();
+  };
+
+  if (rowCountA === 0) seedTables('A');
+  if (rowCountB === 0) seedTables('B');
   console.log('✅ SQLite agenda database seeded with schedule data.');
 }
 
@@ -146,7 +167,7 @@ function parseTime(timeStr: string): number {
   return hours * 60 + minutes;
 }
 
-export function getAgendaData(): AgendaDay[] {
+export function getAgendaData(user: 'A' | 'B'): AgendaDay[] {
   const rows = db.prepare(`
     SELECT
       d.id   AS day_id,
@@ -157,8 +178,8 @@ export function getAgendaData(): AgendaDay[] {
       s.event,
       s.location,
       s.status
-    FROM agenda_days d
-    JOIN agenda_schedules s ON s.day_id = d.id
+    FROM agenda_days_${user} d
+    JOIN agenda_schedules_${user} s ON s.day_id = d.id
     ORDER BY d.id, s.id
   `).all() as (ScheduleRow & { schedule_id: number })[];
 
@@ -188,9 +209,9 @@ export function getAgendaData(): AgendaDay[] {
 // Mutation helpers (used by chatbot tools)
 // ----------------------------------------------------
 
-export function getSchedulesByDayId(dayId: number): AgendaScheduleItem[] {
+export function getSchedulesByDayId(dayId: number, user: 'A' | 'B'): AgendaScheduleItem[] {
   const rows = db.prepare(
-    'SELECT id, time, event, location, status FROM agenda_schedules WHERE day_id = ? ORDER BY id'
+    `SELECT id, time, event, location, status FROM agenda_schedules_${user} WHERE day_id = ? ORDER BY id`
   ).all(dayId) as AgendaScheduleItem[];
   return rows.sort((a, b) => parseTime(a.time) - parseTime(b.time));
 }
@@ -199,10 +220,11 @@ export function addScheduleEvent(
   dayId: number,
   time: string,
   event: string,
-  location: string
+  location: string,
+  user: 'A' | 'B'
 ): AgendaScheduleItem {
   const result = db.prepare(
-    'INSERT INTO agenda_schedules (day_id, time, event, location, status) VALUES (?, ?, ?, ?, ?)'
+    `INSERT INTO agenda_schedules_${user} (day_id, time, event, location, status) VALUES (?, ?, ?, ?, ?)`
   ).run(dayId, time, event, location, 'Planned');
 
   return {
@@ -216,7 +238,8 @@ export function addScheduleEvent(
 
 export function updateScheduleEvent(
   scheduleId: number,
-  fields: { time?: string; event?: string; location?: string; status?: string }
+  fields: { time?: string; event?: string; location?: string; status?: string },
+  user: 'A' | 'B'
 ): AgendaScheduleItem | null {
   // Build dynamic SET clause from provided fields
   const setClauses: string[] = [];
@@ -230,11 +253,11 @@ export function updateScheduleEvent(
   if (setClauses.length === 0) return null;
 
   values.push(scheduleId);
-  db.prepare(`UPDATE agenda_schedules SET ${setClauses.join(', ')} WHERE id = ?`).run(...values);
+  db.prepare(`UPDATE agenda_schedules_${user} SET ${setClauses.join(', ')} WHERE id = ?`).run(...values);
 
   // Return updated row
   const row = db.prepare(
-    'SELECT id, time, event, location, status FROM agenda_schedules WHERE id = ?'
+    `SELECT id, time, event, location, status FROM agenda_schedules_${user} WHERE id = ?`
   ).get(scheduleId) as AgendaScheduleItem | undefined;
 
   return row || null;

@@ -10,9 +10,46 @@ import { ChatWidget } from './components/ChatWidget';
 import { SHOPPING_GUIDE, HERITAGE_PLACES, NIGHTLIFE_PLACES } from './data/royalData';
 
 export default function App() {
+  const [user, setUser] = useState<'A' | 'B' | 'Admin' | null>(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
   const [chatOpen, setChatOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
   const [agendaRefreshKey, setAgendaRefreshKey] = useState(0);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username === 'UserA' && password === 'UserA@Password') setUser('A');
+    else if (username === 'UserB' && password === 'UserB@Password') setUser('B');
+    else if (username === 'UserAdmin' && password === 'UserAdmin@Password') setUser('Admin');
+    else setError('Invalid credentials');
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-2xl border border-[#D4AF37] max-w-sm w-full">
+          <h2 className="text-2xl font-serif text-[#4A0E17] font-bold mb-6 text-center">Executive Login</h2>
+          {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-bold text-[#1A1A1A] mb-1">Username</label>
+              <input type="text" value={username} onChange={e => setUsername(e.target.value)} className="w-full border rounded p-2 focus:ring-[#D4AF37] focus:border-[#D4AF37]" required />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-[#1A1A1A] mb-1">Password</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full border rounded p-2 focus:ring-[#D4AF37] focus:border-[#D4AF37]" required />
+            </div>
+            <button type="submit" className="w-full bg-[#4A0E17] text-white p-2 rounded font-bold hover:bg-[#8A1515] transition-colors">Login</button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  const chatUser = user === 'Admin' ? 'A' : user;
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#1A1A1A] flex flex-col font-sans">
@@ -32,7 +69,14 @@ export default function App() {
         <StatusBar />
 
         {/* Agenda Section */}
-        <AgendaSection key={agendaRefreshKey} />
+        {user === 'Admin' ? (
+          <>
+            <AgendaSection key={agendaRefreshKey + '-a'} user="A" />
+            <AgendaSection key={agendaRefreshKey + '-b'} user="B" />
+          </>
+        ) : (
+          <AgendaSection key={agendaRefreshKey} user={user} />
+        )}
 
         {/* Durga Puja 2026 */}
         <DurgaPujaSection />
@@ -70,6 +114,7 @@ export default function App() {
         isOpen={chatOpen}
         onClose={() => setChatOpen(!chatOpen)}
         onScheduleChanged={() => setAgendaRefreshKey(k => k + 1)}
+        user={chatUser}
       />
 
       {/* Footer */}

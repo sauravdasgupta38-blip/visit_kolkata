@@ -8,9 +8,10 @@ interface ChatWidgetProps {
   isOpen: boolean;
   onClose: () => void;
   onScheduleChanged?: () => void;
+  user: 'A' | 'B';
 }
 
-export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onScheduleChanged }) => {
+export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onScheduleChanged, user }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'msg-1',
@@ -58,7 +59,8 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, onClose, onSched
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text.trim(),
-          history: messages.map(m => ({ role: m.sender, content: m.text }))
+          history: messages.map(m => ({ role: m.sender, content: m.text })),
+          user
         })
       });
 

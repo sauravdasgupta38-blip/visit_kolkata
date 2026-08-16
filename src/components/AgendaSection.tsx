@@ -14,13 +14,17 @@ interface AgendaDay {
   schedules: Schedule[];
 }
 
-export const AgendaSection: React.FC = () => {
+interface AgendaSectionProps {
+  user: 'A' | 'B';
+}
+
+export const AgendaSection: React.FC<AgendaSectionProps> = ({ user }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [agendaData, setAgendaData] = useState<AgendaDay[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/agenda')
+    fetch('/api/agenda?user=' + user)
       .then(res => res.json())
       .then((data: AgendaDay[]) => {
         setAgendaData(data);
@@ -57,7 +61,7 @@ export const AgendaSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-sm font-bold tracking-widest text-[#C82323] uppercase mb-2">Executive Itinerary</h2>
-          <h3 className="text-4xl font-serif font-bold text-[#4A0E17]">Visit Agenda Overview</h3>
+          <h3 className="text-4xl font-serif font-bold text-[#4A0E17]">Visit Agenda Overview - User {user}</h3>
         </div>
 
         {/* Tabs */}
